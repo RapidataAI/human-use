@@ -14,9 +14,7 @@
 
 Ranking different image generation models.
 
-[![AI Agents in Action](https://github.com/user-attachments/assets/030885b3-f7ea-4acf-84d9-f2ae2a0ee36f)](https://youtu.be/YYjGM4ihuw8)
-
-[![AI Did My Groceries](https://github.com/user-attachments/assets/d9359085-bde6-41d4-aa4e-6520d0221872)](https://www.youtube.com/watch?v=L2Ya9PYNns8)
+https://github.com/user-attachments/assets/030885b3-f7ea-4acf-84d9-f2ae2a0ee36f
 
 ## App Setup
 
