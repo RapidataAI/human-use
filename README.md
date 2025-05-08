@@ -10,6 +10,9 @@
 🤖 Human Use is the easiest way to connect your AI agents with human intelligence via the Rapidata API.
 
 
+## Human Use in Action
+
+Ranking different image generation models.
 [![AI Agents in Action](https://assets.rapidata.ai/human_use/human_use.gif)](https://youtu.be/YYjGM4ihuw8)
 
 ## App Setup
