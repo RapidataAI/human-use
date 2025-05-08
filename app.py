@@ -13,7 +13,7 @@ import random
 load_dotenv()
 
 # Global theme color constant
-THEME_COLOR = "#0077ff"  # Default purple theme
+THEME_COLOR = "#0077ff"  # Default blue theme
 
 if os.name == 'nt':
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
