@@ -14,9 +14,11 @@
 
 Ranking different image generation models.
 
-![human use](https://github.com/user-attachments/assets/547d10df-302e-49cf-af56-158e5616528c)
 
-[![AI Agents in Action](https://assets.rapidata.ai/human_use/human_use.gif)](https://youtu.be/YYjGM4ihuw8)
+
+
+
+[![AI Agents in Action](https://github.com/user-attachments/assets/030885b3-f7ea-4acf-84d9-f2ae2a0ee36f)](https://youtu.be/YYjGM4ihuw8)
 
 ## App Setup
 
