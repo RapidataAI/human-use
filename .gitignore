@@ -1,0 +1,16 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.env
+rapidata_mcp.log
+mcp_server.log
+*.ipynb
+guidelines.txt
+temp/
