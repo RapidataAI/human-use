@@ -1,20 +1,29 @@
-# Rapidata and Image Generation Setup
+<a href="https://www.rapidata.ai">
+<img src="https://cdn-uploads.huggingface.co/production/uploads/66f5624c42b853e73e0738eb/jfxR79bOztqaC6_yNNnGU.jpeg" alt="Rapidata Logo">
+</a>
 
-## Clone Repositories
+# Human Use 🤝
+[![GitHub stars](https://img.shields.io/github/stars/RapidataAI/human-use?style=social)](https://github.com/RapidataAI/human-use/stargazers)
+[![Documentation](https://img.shields.io/badge/Documentation-📗-blue)](https://docs.rapidata.ai)
+[![Twitter Follow](https://img.shields.io/twitter/follow/RapidataAI?style=social)](https://x.com/RapidataAI)
+
+🤖 Human Use is the easiest way to connect your AI agents with human intelligence via the Rapidata API.
+
+## App Setup
+
+### Clone Repositories
 Clone the following repositories along side the current one (do not clone them inside the current one, can be whereever it's convenient).:
 ```bash
-git clone https://github.com/RapidataAI/mcp-imagegen.git
-
-git clone https://github.com/RapidataAI/rapidata-mcp.git
+git clone https://github.com/RapidataAI/human-use.git
 ```
 
 ## Environment Configuration
 
-1. Create a .env file in each repository directory where it's needed.
+1. Create a .env file in the human-use repository
 2. Use the .env.example file as a template
 3. Replace the default values with your own credentials/settings
 
-> **Note:** All paths should be ABSOLUTE paths
+> **Note:** paths should be ABSOLUTE paths
 
 ## Installation with UV
 
@@ -52,4 +61,4 @@ streamlit run app.py
 
 ### Troubleshooting
 
-If you encounter issues, with the dependencies make sure that which python and which streamlit. if they are not the same path. run "python -m streamlit run app.py" instead of "streamlit run app.py".
+If you encounter issues, with the dependencies make sure that "which python" and "which streamlit" are the same path. If they are not the same path, run "python -m streamlit run app.py" instead of "streamlit run app.py".
