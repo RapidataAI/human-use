@@ -75,8 +75,8 @@ The app is a custom Streamlit app that allows you to use the MCP server. We have
 
 ### App Setup
 
-#### Clone Repositories
-Clone the current repository:
+#### Clone Repository
+
 ```bash
 git clone https://github.com/RapidataAI/human-use.git
 ```
@@ -125,7 +125,7 @@ streamlit run app.py
 
 If you encounter issues, with the dependencies make sure that "which python" and "which streamlit" are the same path. If they are not the same path, run "python -m streamlit run app.py" instead of "streamlit run app.py".
 
-If UV is not found, make sure you close all terminals and editors and re-open a new one.
+If UV is not found, make sure you close all terminals and editors, then re-open a new one and try again.
 
 ## Contact
 
