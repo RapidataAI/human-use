@@ -121,3 +121,7 @@ streamlit run app.py
 #### Troubleshooting
 
 If you encounter issues, with the dependencies make sure that "which python" and "which streamlit" are the same path. If they are not the same path, run "python -m streamlit run app.py" instead of "streamlit run app.py".
+
+## Contact
+
+If you have any questions or need further assistance, please contact us at info@rapidat.ai.
