@@ -4,7 +4,7 @@
 
 <h1 align="center">Human Use 🤝 Enable AI to ask anyone anything</h1>
 
-[![GitHub stars](https://img.shields.io/github/stars/RapidataAI/human-use?style=social)](https://github.com/RapidataAI/human-use/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/RapidataAI/human-use?style=social&cachebust=1)](https://github.com/RapidataAI/human-use/stargazers)
 [![Documentation](https://img.shields.io/badge/Documentation-📗-blue)](https://docs.rapidata.ai)
 [![Twitter Follow](https://img.shields.io/twitter/follow/RapidataAI?style=social)](https://x.com/RapidataAI)
 
@@ -129,4 +129,4 @@ If you encounter issues, with the dependencies make sure that "which python" and
 
 ## Contact
 
-If you have any questions or need further assistance, please contact us at info@rapidat.ai.
+If you have any questions or need further assistance, please contact us at info@rapidata.ai.
