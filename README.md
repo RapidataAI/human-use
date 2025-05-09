@@ -15,6 +15,9 @@
 Ranking different image generation models.
 [![AI Agents in Action](https://assets.rapidata.ai/human_use/human_use.gif)](https://youtu.be/YYjGM4ihuw8)
 
+[![AI Agents in Action](https://github.com/user-attachments/assets/030885b3-f7ea-4acf-84d9-f2ae2a0ee36f)](https://youtu.be/YYjGM4ihuw8)
+
+
 ## App Setup
 
 ### Clone Repositories
@@ -43,7 +46,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-### Setup Instructions (in the mcp-app)
+### Setup Instructions (in the human-use repository)
 
 1. Create and activate a virtual environment:
     ```bash
