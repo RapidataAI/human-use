@@ -61,15 +61,21 @@ add the following to your cursor mcp.json file (usually in ~/.cursor/mcp.json)
 You should now be able to see the human-use server in Cursor settings.
 
 
-## App Setup
+## App
 
-### Clone Repositories
+### Overview
+
+The app is a custom Streamlit app that allows you to use the MCP server. We have built because of [issues](https://github.com/AgentDeskAI/browser-tools-mcp/issues/103) with other clients. Namely the Claude desktop app.
+
+### App Setup
+
+#### Clone Repositories
 Clone the following repositories along side the current one (do not clone them inside the current one, can be whereever it's convenient).:
 ```bash
 git clone https://github.com/RapidataAI/human-use.git
 ```
 
-## Environment Configuration
+#### Environment Configuration
 
 1. Create a .env file in the human-use repository
 2. Use the .env.example file as a template
@@ -77,9 +83,9 @@ git clone https://github.com/RapidataAI/human-use.git
 
 > **Note:** paths should be ABSOLUTE paths
 
-## Installation with UV
+#### Installation with UV
 
-### Prerequisites
+##### Prerequisites
 Install uv if you haven't already:
 ```bash
 # For MacOS/Linux
@@ -89,7 +95,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-### Setup Instructions (in the human-use repository)
+#### Setup Instructions (in the human-use repository)
 
 1. Create and activate a virtual environment:
     ```bash
@@ -106,11 +112,11 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
     uv sync
     ```
 
-## Run the application
+#### Run the application
 ```bash
 streamlit run app.py
 ```
 
-### Troubleshooting
+#### Troubleshooting
 
 If you encounter issues, with the dependencies make sure that "which python" and "which streamlit" are the same path. If they are not the same path, run "python -m streamlit run app.py" instead of "streamlit run app.py".
