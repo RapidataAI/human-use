@@ -40,7 +40,9 @@ The MCP server is a tool that allows you to connect your AI agents with human in
 ### Configuration
 
 **Cursor**
-```
+
+add the following to your cursor mcp.json file (usually in ~/.cursor/mcp.json)
+```json
 {
     "mcpServers": {
         "human-use": {
@@ -55,6 +57,9 @@ The MCP server is a tool that allows you to connect your AI agents with human in
     }
 }
 ```
+
+You should now be able to see the human-use server in Cursor settings.
+
 
 ## App Setup
 
