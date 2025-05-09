@@ -13,7 +13,8 @@
 ## Human Use in Action
 
 Ranking different image generation models.
-[![AI Agents in Action](https://assets.rapidata.ai/human_use/human_use.gif)](https://youtu.be/YYjGM4ihuw8)
+
+https://github.com/user-attachments/assets/030885b3-f7ea-4acf-84d9-f2ae2a0ee36f
 
 [![AI Agents in Action](https://github.com/user-attachments/assets/030885b3-f7ea-4acf-84d9-f2ae2a0ee36f)](https://youtu.be/YYjGM4ihuw8)
 
