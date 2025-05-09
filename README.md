@@ -14,7 +14,11 @@
 
 Ranking different image generation models.
 
-[![AI Agents in Action](https://github.com/user-attachments/assets/8e6697c0-3ffa-44fa-89eb-e40e30d4ab53)](https://youtu.be/YYjGM4ihuw8)
+[![AI Agent Ranking](https://github.com/user-attachments/assets/8e6697c0-3ffa-44fa-89eb-e40e30d4ab53)](https://youtu.be/YYjGM4ihuw8)
+
+Finding the best slogan
+
+[![AI Agent Slogan](https://github.com/user-attachments/assets/28148703-7fb2-4876-9528-bcfd8ce9b50a)](https://youtu.be/n36ovFDvH-Y)
 
 ## App Setup
 
