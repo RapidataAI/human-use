@@ -2,7 +2,8 @@
 <img src="https://github.com/user-attachments/assets/d8ff0f04-c636-4e04-b2de-399b33a2805d" alt="Rapidata Human Use Logo">
 </a>
 
-# Human Use 🤝
+<h1 align="center">Human Use 🤝 Enable AI to ask anyone anything</h1>
+
 [![GitHub stars](https://img.shields.io/github/stars/RapidataAI/human-use?style=social)](https://github.com/RapidataAI/human-use/stargazers)
 [![Documentation](https://img.shields.io/badge/Documentation-📗-blue)](https://docs.rapidata.ai)
 [![Twitter Follow](https://img.shields.io/twitter/follow/RapidataAI?style=social)](https://x.com/RapidataAI)
@@ -12,10 +13,6 @@
 
 ## Human Use in Action
 
-Ranking different image generation models.
-
-[![AI Agent Ranking](https://github.com/user-attachments/assets/8e6697c0-3ffa-44fa-89eb-e40e30d4ab53)](https://youtu.be/YYjGM4ihuw8)
-
 Finding the best slogan
 
 [![AI Agent Slogan](https://github.com/user-attachments/assets/28148703-7fb2-4876-9528-bcfd8ce9b50a)](https://youtu.be/n36ovFDvH-Y)
@@ -23,6 +20,10 @@ Finding the best slogan
 Function Naming
 
 [![Cursor Function Naming](https://github.com/user-attachments/assets/5675e705-7dc1-4912-9e5d-389d0798df95)](https://youtu.be/Rc5IIZJ6fgw)
+
+Ranking different image generation models.
+
+[![AI Agent Ranking](https://github.com/user-attachments/assets/8e6697c0-3ffa-44fa-89eb-e40e30d4ab53)](https://youtu.be/YYjGM4ihuw8)
 
 ## MCP Server
 
