@@ -37,7 +37,7 @@ async def get_free_text_responses(
         total_responses (int): The total number of responses that will be collected. More responses will take SIGNIFICANTLY longer. defaults to 5.
         dir_path (Optional[str]): path to the directory containing images. If not provided, a default image will be used.
             If provided, the images in the directory will be used as datapoints. (EACH datapoint will get the amount of responses specified in total_responses)
-        language (str | None): The language the respondants speak. Has to be given as 2 LOWERCASE letters. If not provided, the question will be asked to all respondants.
+        language (str | None): The language the respondents speak. Has to be given as 2 LOWERCASE letters. If not provided, the question will be asked to all respondents.
     Returns:
         dict[str, Any]: dictionary containing the final elo rankings of the images
     """
