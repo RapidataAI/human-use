@@ -25,6 +25,7 @@ async def get_free_text_responses(
     instruction: str, 
     total_responses: int = 5,
     dir_path: Optional[str] = None,
+    language: str | None = None,
 ) -> dict[str, Any]:
     """get free text responses from humans
 
@@ -36,7 +37,7 @@ async def get_free_text_responses(
         total_responses (int): The total number of responses that will be collected. More responses will take SIGNIFICANTLY longer. defaults to 5.
         dir_path (Optional[str]): path to the directory containing images. If not provided, a default image will be used.
             If provided, the images in the directory will be used as datapoints. (EACH datapoint will get the amount of responses specified in total_responses)
-
+        language (str | None): The language the respondants speak. Has to be given as 2 LOWERCASE letters. If not provided, the question will be asked to all respondants.
     Returns:
         dict[str, Any]: dictionary containing the final elo rankings of the images
     """
@@ -60,6 +61,7 @@ async def get_free_text_responses(
             instruction=instruction,
             datapoints=datapoints,
             responses_per_datapoint=total_responses,
+            filters=[LanguageFilter(language_codes=[language])] if language else [],
         ).run()
         
         logger.info("Free text order created and run successfully")
@@ -86,6 +88,7 @@ async def classification(
     answer_options: list[str],
     dir_path: Optional[str] = None,
     total_responses: int = 25,
+    language: str | None = None,
 ) -> list[dict[str, float]]:
     """get classification responses from humans
 
@@ -99,7 +102,7 @@ async def classification(
         dir_path (Optional[str]): path to the directory containing images. If not provided, a default image will be used.
         total_responses (int): The total number of responses that will be collected. More responses will take longer but give a clearer results. defaults to 25.
             if a directory is provided, this will be the number of responses PER image.
-
+        language (str | None): The language the respondants speak. Has to be given as 2 LOWERCASE letters. If not provided, the question will be asked to all respondants.
     Returns:
         list[dict[str, float]]: list of dictionaries containing the classification results for each image
     """
@@ -124,6 +127,7 @@ async def classification(
             answer_options=answer_options,
             datapoints=full_paths,
             responses_per_datapoint=total_responses,
+            filters=[LanguageFilter(language_codes=[language])] if language else [],
         ).run()
 
         logger.info("Classification order created and run successfully")
