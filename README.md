@@ -60,6 +60,7 @@ add the following to your cursor mcp.json file (usually in ~/.cursor/mcp.json)
 
 You should now be able to see the human-use server in Cursor settings.
 
+![Cursor MCP](https://github.com/user-attachments/assets/385865dc-af6d-4ea5-8693-62c259185c06)
 
 ## App Setup
 
