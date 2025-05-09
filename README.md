@@ -1,5 +1,5 @@
 <a href="https://www.rapidata.ai">
-<img src="https://cdn-uploads.huggingface.co/production/uploads/66f5624c42b853e73e0738eb/jfxR79bOztqaC6_yNNnGU.jpeg" alt="Rapidata Logo">
+<img src="https://github.com/user-attachments/assets/d8ff0f04-c636-4e04-b2de-399b33a2805d" alt="Rapidata Human Use Logo">
 </a>
 
 # Human Use 🤝
