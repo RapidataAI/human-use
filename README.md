@@ -20,6 +20,10 @@ Finding the best slogan
 
 [![AI Agent Slogan](https://github.com/user-attachments/assets/28148703-7fb2-4876-9528-bcfd8ce9b50a)](https://youtu.be/n36ovFDvH-Y)
 
+Function Naming
+
+[![Cursor Function Naming](https://github.com/user-attachments/assets/5675e705-7dc1-4912-9e5d-389d0798df95)](https://youtu.be/Rc5IIZJ6fgw)
+
 ## MCP Server
 
 ### Overview
