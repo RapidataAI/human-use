@@ -82,7 +82,7 @@ async def get_free_text_responses(
         return {"error": f"Failed to get free text responses: {str(e)}"}
 
 @mcp.tool()
-async def classification(
+async def get_human_image_classification(
     name: str,
     instruction: str,
     answer_options: list[str],
@@ -106,7 +106,7 @@ async def classification(
     Returns:
         list[dict[str, float]]: list of dictionaries containing the classification results for each image
     """
-    logger.info(f"classification called with name: {name}, instruction: {instruction}")
+    logger.info(f"get_human_image_classification called with name: {name}, instruction: {instruction}")
     logger.debug(f"Answer options: {answer_options}, total_responses: {total_responses}, dir_path: {dir_path}")
     
     try:
@@ -144,7 +144,7 @@ async def classification(
         
         return processed_results
     except Exception as e:
-        logger.error(f"Error in classification: {str(e)}", exc_info=True)
+        logger.error(f"Error in get_human_image_classification: {str(e)}", exc_info=True)
         return {"error": f"Failed to get classification results: {str(e)}"}
 
 @mcp.tool()
