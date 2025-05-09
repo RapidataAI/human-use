@@ -20,6 +20,42 @@ Finding the best slogan
 
 [![AI Agent Slogan](https://github.com/user-attachments/assets/28148703-7fb2-4876-9528-bcfd8ce9b50a)](https://youtu.be/n36ovFDvH-Y)
 
+## MCP Server
+
+### Overview
+
+The MCP server is a tool that allows you to connect your AI agents with human intelligence via the Rapidata API.
+
+### Tools
+
+1. get_free_text_responses
+    - Will ask actual humans to provide some short free text responses to the question.
+2. get_human_image_classification
+    - Will ask actual humans to classify the images in the directory.
+3. get_human_image_ranking
+    - Will ask actual humans to rank the images in the directory.
+4. get_human_text_comparison
+    - Will ask actual humans to compare two texts and select which one is better.
+
+### Configuration
+
+**Cursor**
+```
+{
+    "mcpServers": {
+        "human-use": {
+            "command": "uv",
+            "args": [
+                "--directory",
+                "YOUR_ABSOLUTE_PATH_HERE",
+                "run",
+                "rapidata_human_api.py"
+            ]
+        }
+    }
+}
+```
+
 ## App Setup
 
 ### Clone Repositories

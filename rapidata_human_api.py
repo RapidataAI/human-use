@@ -148,7 +148,7 @@ async def get_human_image_classification(
         return {"error": f"Failed to get classification results: {str(e)}"}
 
 @mcp.tool()
-async def rank_images(
+async def get_human_image_ranking(
     dir_path: str, 
     name: str,
     instruction: str,
@@ -169,7 +169,7 @@ async def rank_images(
     Returns:
         dict[str, Any]: dictionary containing the final elo rankings of the images
     """
-    logger.info(f"rank_images called with name: {name}, instruction: {instruction}, dir_path: {dir_path}")
+    logger.info(f"get_human_image_ranking called with name: {name}, instruction: {instruction}, dir_path: {dir_path}")
     logger.debug(f"Total comparison budget: {total_comparison_budget}")
     
     try:
@@ -202,11 +202,11 @@ async def rank_images(
         
         return processed_results  
     except Exception as e:
-        logger.error(f"Error in rank_images: {str(e)}", exc_info=True)
+        logger.error(f"Error in get_human_image_ranking: {str(e)}", exc_info=True)
         return {"error": f"Failed to rank images: {str(e)}"}
 
 @mcp.tool()
-async def compare_texts(
+async def get_human_text_comparison(
     text_pairs: list[list[str]],
     name: str, 
     instruction: str, 
@@ -227,7 +227,7 @@ async def compare_texts(
     Returns:
         list[dict[str, int]]: list of dictionaries containing the comparison results for each pair of texts
     """
-    logger.info(f"compare_texts called with name: {name}, instruction: {instruction}")
+    logger.info(f"get_human_text_comparison called with name: {name}, instruction: {instruction}")
     logger.debug(f"Total responses: {total_responses}, language: {language}")
     
     try:
@@ -257,7 +257,7 @@ async def compare_texts(
         
         return processed_results
     except Exception as e:
-        logger.error(f"Error in compare_texts: {str(e)}", exc_info=True)
+        logger.error(f"Error in get_human_text_comparison: {str(e)}", exc_info=True)
         return {"error": f"Failed to compare texts: {str(e)}"}
 
 if __name__ == "__main__":
