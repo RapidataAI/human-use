@@ -14,10 +14,7 @@
 
 Ranking different image generation models.
 
-https://github.com/user-attachments/assets/030885b3-f7ea-4acf-84d9-f2ae2a0ee36f
-
-[![AI Agents in Action](https://github.com/user-attachments/assets/030885b3-f7ea-4acf-84d9-f2ae2a0ee36f)](https://youtu.be/YYjGM4ihuw8)
-
+[![AI Agents in Action](https://github.com/user-attachments/assets/8e6697c0-3ffa-44fa-89eb-e40e30d4ab53)](https://youtu.be/YYjGM4ihuw8)
 
 ## App Setup
 
