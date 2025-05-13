@@ -9,8 +9,7 @@ wheels/
 # Virtual environments
 .venv
 .env
-rapidata_mcp.log
-mcp_server.log
+*.log
 *.ipynb
 guidelines.txt
 temp/

@@ -1,5 +1,5 @@
 from mcp.server.fastmcp import FastMCP
-from rapidata import RapidataClient, LanguageFilter
+from rapidata import RapidataClient, LanguageFilter, LabelingSelection, RetrievalMode 
 import os
 from typing import Any, Optional
 import logging
@@ -55,13 +55,18 @@ async def get_free_text_responses(
             datapoints = ["https://assets.rapidata.ai/152c11b5-c428-4489-ad83-1651ebfe0efd.jpeg"]
             logger.debug("No directory path provided, using default image")
 
+        filters = []
+        if language:
+            filters.append(LanguageFilter(language_codes=[language]))
+
         logger.info("Creating free text order")
         order = client.order.create_free_text_order(
             name=name,
             instruction=instruction,
             datapoints=datapoints,
             responses_per_datapoint=total_responses,
-            filters=[LanguageFilter(language_codes=[language])] if language else [],
+            selections=[LabelingSelection(amount=1, retrieval_mode=RetrievalMode.Random)],
+            filters=filters,
         ).run()
         
         logger.info("Free text order created and run successfully")
@@ -120,6 +125,10 @@ async def get_human_image_classification(
             full_paths = ["https://assets.rapidata.ai/152c11b5-c428-4489-ad83-1651ebfe0efd.jpeg"]
             logger.debug("No directory path provided, using default image")
 
+        filters = []
+        if language:
+            filters.append(LanguageFilter(language_codes=[language]))
+
         logger.info("Creating classification order")
         order = client.order.create_classification_order(
             name=name,
@@ -127,7 +136,8 @@ async def get_human_image_classification(
             answer_options=answer_options,
             datapoints=full_paths,
             responses_per_datapoint=total_responses,
-            filters=[LanguageFilter(language_codes=[language])] if language else [],
+            filters=filters,
+            selections=[LabelingSelection(amount=3, retrieval_mode=RetrievalMode.Random)],
         ).run()
 
         logger.info("Classification order created and run successfully")
@@ -186,6 +196,7 @@ async def get_human_image_ranking(
             datapoints=paths,
             responses_per_comparison=1,
             total_comparison_budget=total_comparison_budget,
+            selections=[LabelingSelection(amount=3, retrieval_mode=RetrievalMode.Random)],
         ).run()
         
         logger.info("Ranking order created and run successfully")
@@ -241,6 +252,7 @@ async def get_human_text_comparison(
             responses_per_datapoint=total_responses,
             data_type="text",
             filters=[LanguageFilter(language_codes=[language])],
+            selections=[LabelingSelection(amount=2, retrieval_mode=RetrievalMode.Random)],
         ).run()
 
         logger.info("Text comparison order created and run successfully")

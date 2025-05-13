@@ -68,6 +68,11 @@ async def initialize_client(model: str = "claude-3-7-sonnet-20250219") -> MCPCli
         await client.connect_to_server(rapidata_mcp_path)
     else:
         logger.warning("Rapidata MCP path not found")
+    image_generation_mcp_path = os.environ.get("PATH_TO_IMAGE_GENERATION_MCP")
+    if image_generation_mcp_path:
+        await client.connect_to_server(image_generation_mcp_path)
+    else:
+        logger.warning("Image generation MCP path not found")
     
     return client
 
