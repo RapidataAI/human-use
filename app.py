@@ -662,6 +662,12 @@ def apply_custom_css():
         .dashboard-link {{
             font-weight: bold;
         }}
+        
+        .description-box {{
+            padding: .5rem;
+            background-color: #ff000050;
+            border-radius: .25rem;
+        }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -686,7 +692,7 @@ async def main():
     
     st.markdown("<h1>Human Use</h1>", unsafe_allow_html=True)
     
-    st.markdown("<div>Please, remember that all the orders created will be available at <a href='https://app.rapidata.ai/' classname='dashboard-link' target='_blank' >app.rapidata.ai</a></div>", unsafe_allow_html=True)
+    st.markdown("<div classname='description-box'>Orders created can be found at <a href='https://app.rapidata.ai/' classname='dashboard-link' target='_blank' >app.rapidata.ai</a></div>", unsafe_allow_html=True)
     
     
     # Add toggle button outside of the sidebar
