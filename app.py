@@ -1,3 +1,4 @@
+from PIL import Image
 import streamlit as st
 import os
 from datetime import datetime
@@ -260,9 +261,148 @@ def apply_custom_css():
     st.markdown(f"""
     <style>
         /* Overall app styling */
-        .stApp {{
-            background-color: #f8f9fa;
+
+        :root {{
+            
+            /* bg */          
+            --color-background: oklch(16.34% 0.0091 264.28);
+            --color-background-secondary: oklch(20.27% 0.0118 254.1);
+            
+            /* text */
+            --color-text-primary: oklch(0.967 0.003 264.542);
+            --color-text-secondary: oklch(55.55% 0 0);
+
+            /* borders */          
+            --color-border-primary: oklch(28.04% 0.0119 264.36);           
+        }}
+        
+        /* Sidebar, dropdown menu */
+        
+        .stSelectbox > div > div {{
+            background-color: var(--color-background) !important;
+            border-color: var(--color-border-primary) !important;
+        }}
+
+        ul[data-testid="stSelectboxVirtualDropdown"] {{
+            background-color: var(--color-background) !important;
+        }}
+    
+        /* dropdown top right */
+        
+        .stMainMenuPopover > div  {{
+            background-color: var(--color-background) !important;
+            border-color: var(--color-border-primary) !important;
+        }}
+
+        .stMainMenuPopover li {{
+            background-color: inherit !important;
+        }}
+   
+        /* dialog */
+        
+        .stDialog > div > div {{
+            background-color: var(--color-background) !important;
+            border-color: var(--color-border-primary) !important;
+        }}
+        
+        .stDialog > div > div .st-bp {{
+            background-color: inherit !important;  
+        }}
+        
+        /* button */
+        
+        button[kind="secondary"] {{
+            background-color: var(--color-background) !important;
+            color: var(--color-text-primary) !important;
+            border-color: var(--color-border-primary) !important;
+        }}
+        
+        /* chat */
+        
+        .stMainBlockContainer {{
+            max-width: 800px;
+        }}
+        
+        .stChatMessage {{
+            background-color: var(--color-background-secondary) !important;
+        }}
+        
+        div[data-testid="stChatMessageContent"] {{
+            background-color: var(--color-background-secondary) !important;
+            border-radius: 4px !important;
+        }}
+        
+        .react-json-view {{
+            background-color: inherit !important;
+        }}
+
+        .stCode pre {{
+            background-color: inherit !important;
+            border: none !important;
+            color: inherit !important;
+        }}
+        
+        /* textarea input */
+
+        .stChatInput {{
+            border-color: var(--color-border-primary) !important;
+        }}
+        
+        .stChatInput > div{{
+            background-color: var(--color-background-secondary) !important;
+        }}
+        
+        .stChatInput > div > div > div {{
+            background-color: var(--color-background-secondary) !important;
+        }}
+        
+        .stChatInput button {{
+            color: var(--color-text-secondary) !important;
+        }}
+        
+        textarea::placeholder {{
+            color: var(--color-text-secondary) !important;
+        }}
+        
+        textarea::placeholder {{
+            color: white !important;
+        }}
+        textarea::placeholder {{
+            color: var(--color-text-secondary) !important;
+        }} 
+       
+        hr {{
+            background-color: var(--color-border-primary) !important;
+        }}
+
+        * {{   
+            color: var(--color-text-primary) !important;
+        }}
+        
+        body {{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-background) !important;
+        }}
+        
+        .stBottom > div {{
+            background-color: var(--color-background) !important;
+        }}
+        
+        .stAppHeader {{
+            background-color: var(--color-background) !important;
+        }}
+        
+        .stMain {{
+            background-color: var(--color-background) !important;
+        }}
+        
+        .stApp {{
+            background-color: var(--color-background) !important;
+        }}
+        
+        .stSidebar {{
+            background-color: var(--color-background) !important;
+            border-color: var(--color-border-primary) !important;
         }}
         
         /* Header styling */
@@ -296,6 +436,7 @@ def apply_custom_css():
         }}
         
         /* Tool styling */
+        
         .tool-header {{
             background-color: {theme_color};
             color: white;
@@ -327,6 +468,7 @@ def apply_custom_css():
         }}
         
         /* Chat message styling */
+
         [data-testid="stChatMessageContent"] {{
             background-color: white;
             border-radius: 10px;
@@ -335,6 +477,7 @@ def apply_custom_css():
         }}
         
         /* User message specific styling */
+        
         [data-testid="stChatMessage"] [data-testid="stHorizontalBlock"]:has([data-testid="stChatMessageContent"]) {{
             background-color: {light_theme};
             border-radius: 12px;
@@ -342,6 +485,7 @@ def apply_custom_css():
         }}
         
         /* Assistant avatar styling */
+
         .stChatMessage .stAvatar {{
             border: 2px solid {medium_theme};
             padding: 2px;
@@ -350,6 +494,7 @@ def apply_custom_css():
         }}
         
         /* Sidebar specific styling */
+        
         [data-testid="stSidebar"] {{
             background-color: #f0f2f5;
             border-right: 1px solid #e1e4e8;
@@ -372,6 +517,7 @@ def apply_custom_css():
         }}
         
         /* Fix button color on focus/active state */
+        
         [data-testid="stSidebar"] .stButton button:focus,
         [data-testid="stSidebar"] .stButton button:active {{
             color: white !important;
@@ -381,6 +527,7 @@ def apply_custom_css():
         }}
         
         /* Code block styling */
+        
         pre {{
             background-color: #f1f3f5;
             border-radius: 0 0 8px 8px;
@@ -401,6 +548,7 @@ def apply_custom_css():
         }}
         
         /* Toggle button styles */
+
         .toggle-button {{
             position: fixed;
             top: 10px;
@@ -420,6 +568,7 @@ def apply_custom_css():
         }}
         
         /* Rotate triangle for open/closed state */
+        
         .triangle-right {{
             width: 0;
             height: 0;
@@ -439,6 +588,7 @@ def apply_custom_css():
         }}
         
         /* Chat input styling */
+        
         [data-testid="stChatInput"] {{
             border-radius: 12px;
             border: 2px solid {medium_theme};
@@ -452,11 +602,13 @@ def apply_custom_css():
         }}
         
         /* Loading animation */
+        
         .stSpinner {{
             border-color: {theme_color} !important;
         }}
         
         /* Animated badge for tool calls */
+        
         @keyframes pulse {{
             0% {{ opacity: 0.6; transform: scale(1); }}
             50% {{ opacity: 1; transform: scale(1.05); }}
@@ -474,6 +626,7 @@ def apply_custom_css():
         }}
         
         /* Branding in footer */
+
         .footer {{
             position: fixed;
             bottom: 0;
@@ -494,13 +647,23 @@ def apply_custom_css():
     """, unsafe_allow_html=True)
 
 
+im = Image.open("favicon.ico")
+
+
 async def main():
+    st.set_page_config(
+        page_title="Rapidata - Human Use",
+        page_icon=im,
+    )
+    
     initialize_session_state()
     
     # Apply custom styling
     apply_custom_css()
     
     # Main app header
+ 
+    
     st.markdown("<h1>Human Use</h1>", unsafe_allow_html=True)
     
     # Add toggle button outside of the sidebar
