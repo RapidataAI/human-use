@@ -16,6 +16,13 @@ load_dotenv()
 # Global theme color constant
 THEME_COLOR = "#0077ff"  # Default blue theme
 
+icons = {
+    "user": "./assets/user.svg",
+    "assistant": "./assets/rapidata.png",
+    "tool": "./assets/pocket-knife.svg",
+    "tool_result": "./assets/chart-gantt.svg",
+}
+
 if os.name == 'nt':
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
@@ -122,7 +129,7 @@ async def get_chat_response(query: str, client: MCPClient) -> str:
         
         if text_content:
             st.session_state.messages.append({"role": "assistant", "content": text_content, "type": "text"})
-            with st.chat_message("assistant", avatar="🤖"):
+            with st.chat_message("assistant", avatar=icons["assistant"]):
                 st.write(text_content)
 
         # Create assistant message for conversation history
@@ -144,7 +151,7 @@ async def get_chat_response(query: str, client: MCPClient) -> str:
                 st.session_state.messages.append(tool_call_msg)
                 
                 # Display animated tool call in UI
-                with st.chat_message("assistant", avatar="🛠️"):
+                with st.chat_message("assistant", avatar=icons["tool"]):
                     tool_container = st.container()
                     with tool_container:
                         st.markdown(f"<div class='tool-header'><span class='tool-name'>{content.name}</span> Tool</div>", unsafe_allow_html=True)
@@ -177,7 +184,7 @@ async def get_chat_response(query: str, client: MCPClient) -> str:
                 st.session_state.messages.append(tool_result_msg)
                 
                 # Display the formatted tool result with proper styling
-                with st.chat_message("assistant", avatar="📊"):
+                with st.chat_message("assistant", avatar=icons["tool_result"]):
                     result_container = st.container()
                     with result_container:
                         st.markdown(f"<div class='result-header'>Result from <span class='tool-name'>{content.name}</span></div>", unsafe_allow_html=True)
@@ -326,6 +333,13 @@ def apply_custom_css():
         
         .stChatMessage {{
             background-color: var(--color-background-secondary) !important;
+        }}
+        
+        .stChatMessage > img {{
+            padding: .25rem !important;
+            background-color: rgba(255,255,255,.25) !important;
+            border-radius: 50% !important;
+            box-sizing: content-box !important;
         }}
         
         div[data-testid="stChatMessageContent"] {{
@@ -644,11 +658,15 @@ def apply_custom_css():
             font-weight: bold;
             color: {theme_color};
         }}
+        
+        .dashboard-link {{
+            font-weight: bold;
+        }}
     </style>
     """, unsafe_allow_html=True)
 
 
-im = Image.open("favicon.ico")
+im = Image.open("./assets/favicon.ico")
 
 
 async def main():
@@ -667,6 +685,9 @@ async def main():
  
     
     st.markdown("<h1>Human Use</h1>", unsafe_allow_html=True)
+    
+    st.markdown("<div>Please, remember that all the orders created will be available at <a href='https://app.rapidata.ai/' classname='dashboard-link' target='_blank' >app.rapidata.ai</a></div>", unsafe_allow_html=True)
+    
     
     # Add toggle button outside of the sidebar
     if st.session_state.sidebar_visible:
@@ -741,11 +762,11 @@ async def main():
         msg_type = message.get("type", "text")
         
         # Different avatars based on message type
-        avatar = "👤" if role == "user" else "🤖"
+        avatar = icons["user"] if role == "user" else icons["assistant"]
         if msg_type == "tool_call":
-            avatar = "🛠️"
+            avatar = icons["tool"]
         elif msg_type == "tool_result":
-            avatar = "📊"
+            avatar = icons["tool_result"]
         
         with st.chat_message(role, avatar=avatar):
             if msg_type == "text":
@@ -767,7 +788,7 @@ async def main():
         st.session_state.messages.append({"role": "user", "content": user_input, "type": "text"})
         
         # Display user message
-        with st.chat_message("user", avatar="👤"):
+        with st.chat_message("user", avatar=icons["user"]):
             st.write(user_input)
         
         # Format messages for API
@@ -779,7 +800,7 @@ async def main():
             })
         
         # Get Claude's response with a spinner
-        with st.spinner("Claude is thinking..."):
+        with st.spinner("Rapidata is thinking..."):
             try:
                 await get_chat_response(user_input, client)
             except Exception as e:
