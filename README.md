@@ -10,6 +10,9 @@
 
 🤖 Human Use is the easiest way to connect your AI agents with human intelligence via the Rapidata API.
 
+## Hosted Version
+
+We now offer a hosted version of Human Use at [chat.rapidata.ai](https://chat.rapidata.ai/) - access all the features without setting up your own environment!
 
 ## Human Use in Action
 
