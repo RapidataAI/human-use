@@ -276,6 +276,11 @@ def apply_custom_css():
             --color-border-primary: oklch(28.04% 0.0119 264.36);           
         }}
         
+        /* hide sidebar */
+        [data-testid="stSidebarCollapsedControl"] {{
+            display: none
+        }}
+        
         /* Sidebar, dropdown menu */
         
         .stSelectbox > div > div {{
@@ -318,10 +323,6 @@ def apply_custom_css():
         }}
         
         /* chat */
-        
-        .stMainBlockContainer {{
-            max-width: 800px;
-        }}
         
         .stChatMessage {{
             background-color: var(--color-background-secondary) !important;
@@ -654,6 +655,7 @@ async def main():
     st.set_page_config(
         page_title="Rapidata - Human Use",
         page_icon=im,
+        initial_sidebar_state="collapsed",
     )
     
     initialize_session_state()
