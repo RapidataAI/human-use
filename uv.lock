@@ -289,6 +289,18 @@ wheels = [
 ]
 
 [[package]]
+name = "httpx-oauth"
+version = "0.16.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "httpx" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/2f/07/db4ad128da3926be22eec586aa87dafd8840c9eb03fe88505fbed016b5c6/httpx_oauth-0.16.1.tar.gz", hash = "sha256:7402f061f860abc092ea4f5c90acfc576a40bbb79633c1d2920f1ca282c296ee", size = 44148 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/45/4b/2b81e876abf77b4af3372aff731f4f6722840ebc7dcfd85778eaba271733/httpx_oauth-0.16.1-py3-none-any.whl", hash = "sha256:2fcad82f80f28d0473a0fc4b4eda223dc952050af7e3a8c8781342d850f09fb5", size = 38056 },
+]
+
+[[package]]
 name = "httpx-sse"
 version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -309,6 +321,7 @@ dependencies = [
     { name = "python-dotenv" },
     { name = "rapidata" },
     { name = "streamlit" },
+    { name = "streamlit-oauth" },
 ]
 
 [package.metadata]
@@ -320,6 +333,7 @@ requires-dist = [
     { name = "python-dotenv", specifier = ">=1.1.0" },
     { name = "rapidata", specifier = ">=2.23.0" },
     { name = "streamlit", specifier = ">=1.45.0" },
+    { name = "streamlit-oauth", specifier = ">=0.1.11" },
 ]
 
 [[package]]
@@ -941,6 +955,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/c0/52/83d46b4c5044477e9c6dee779704a9d4041610439533af9c0a5084921098/streamlit-1.45.0.tar.gz", hash = "sha256:4e99014e113a11a7163b9da5ac079efb1ae5f8575a09c5a6a9c43cd6877a2a88", size = 9462166 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/43/ff/f41cfaf1bb58223fe77ff87213a689f6c9c82f7363f9d7c879d294dbe985/streamlit-1.45.0-py3-none-any.whl", hash = "sha256:b7d03ec68a23de0f1922ec9a28fbe3fe37d9fb31ad31d6c429d262c3631c2943", size = 9856265 },
+]
+
+[[package]]
+name = "streamlit-oauth"
+version = "0.1.11"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "httpx-oauth" },
+    { name = "python-dotenv" },
+    { name = "streamlit" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5e/f0/4dbe56a2e2766b2203571d419d935a187ab802835f2dfd315d4b775f9a51/streamlit_oauth-0.1.11.tar.gz", hash = "sha256:17cec7d50d8e023eeb0037b33466614988383ebdf0b3dce7cca09ac533c8ebc1", size = 65372 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9f/e4/4ecee4d1aef91f5de7c2b3da8339e3079bec3b0e159b3bc207091ca3bb20/streamlit_oauth-0.1.11-py3-none-any.whl", hash = "sha256:cff0301d60d2dbcbef594d346ff336865f17ff343f3666129d24c9d85e093893", size = 120973 },
 ]
 
 [[package]]

@@ -1,20 +1,30 @@
 from PIL import Image
 import streamlit as st
 import os
-from datetime import datetime
 from mcp_client import MCPClient
 import asyncio
 from dotenv import load_dotenv
 import logging
 import json
-import time
-from typing import Any, List, Dict, Optional, Union
-import random
+from typing import Any
+from streamlit_oauth import OAuth2Component
 
 load_dotenv()
 
 # Global theme color constant
 THEME_COLOR = "#0077ff"  # Default blue theme
+
+ENVIROMENT = "rapidata.ai"
+
+# Authentication constants
+AUTHORIZE_URL = f"https://auth.{ENVIROMENT}/connect/authorize"
+TOKEN_URL = f"https://auth.{ENVIROMENT}/connect/token"
+REFRESH_URL = f"https://auth.{ENVIROMENT}/connect/token"
+REVOKE_TOKEN_URL = f"https://auth.{ENVIROMENT}/connect/logout"
+CLIENT_ID = "streamlit"
+CLIENT_SECRET = "rapid-sec-Be3KSXmQ9CRG7kTapQUm-uUaWUtCUFBUp72FC2E4"
+REDIRECT_URI = "http://localhost:8501"
+SCOPE = "openid profile email offline_access"
 
 icons = {
     "user": "./assets/user.svg",
@@ -73,7 +83,10 @@ async def initialize_client(model: str = "claude-3-7-sonnet-20250219") -> MCPCli
     client = MCPClient(model=model)
     rapidata_mcp_path = os.environ.get("PATH_TO_RAPIDATA_MCP")
     if rapidata_mcp_path:
-        await client.connect_to_server(rapidata_mcp_path)
+        env = {"RAPIDATA_TOKENS": json.dumps(st.session_state.token),
+               "RAPIDATA_CLIENT_ID": CLIENT_ID,
+               "RAPIDATA_CLIENT_SECRET": CLIENT_SECRET}
+        await client.connect_to_server(rapidata_mcp_path, env=env)
     else:
         logger.warning("Rapidata MCP path not found")
     image_generation_mcp_path = os.environ.get("PATH_TO_IMAGE_GENERATION_MCP")
@@ -85,7 +98,7 @@ async def initialize_client(model: str = "claude-3-7-sonnet-20250219") -> MCPCli
     return client
 
 
-def format_tool_input(tool_input: Dict[str, Any]) -> str:
+def format_tool_input(tool_input: dict[str, Any]) -> str:
     """Format tool input for display in a more readable way"""
     try:
         formatted = json.dumps(tool_input, indent=2)
@@ -676,17 +689,6 @@ im = Image.open("./assets/favicon.ico")
 
 
 async def main():
-    st.set_page_config(
-        page_title="Rapidata - Human Use",
-        page_icon=im,
-        initial_sidebar_state="collapsed",
-    )
-    
-    initialize_session_state()
-    
-    # Apply custom styling
-    apply_custom_css()
-    
     # Main app header
  
     
@@ -822,7 +824,38 @@ async def main():
         unsafe_allow_html=True
     )
 
+def authorize_button():
+    # Authentication flow
+    oauth2 = OAuth2Component(
+        client_id=CLIENT_ID,
+        client_secret=CLIENT_SECRET,
+        authorize_endpoint=AUTHORIZE_URL,
+        token_endpoint=TOKEN_URL,
+        refresh_token_endpoint=REFRESH_URL,
+    )
+
+    if "token" not in st.session_state:
+        st.markdown("<h1>Human Use</h1>", unsafe_allow_html=True)
+        result = oauth2.authorize_button(
+            "Authorize", REDIRECT_URI, SCOPE, pkce="S256", auto_click=False
+        )
+        if result and "token" in result:
+            st.session_state.token = result["token"]
+            st.rerun()
+        return False  # Return False to indicate auth is not complete
+    
+    return True  # Return True to indicate auth is complete
+
+
 
 if __name__ == "__main__":
     loop = get_event_loop()
-    loop.run_until_complete(main())
+    
+    # First initialize session state and apply CSS
+    initialize_session_state()
+    apply_custom_css()
+    
+    # Only proceed to async main() if authentication is successful
+    if authorize_button():
+        print("Authentication successful", st.session_state.token)
+        loop.run_until_complete(main())

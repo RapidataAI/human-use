@@ -12,4 +12,5 @@ dependencies = [
     "python-dotenv>=1.1.0",
     "rapidata>=2.23.0",
     "streamlit>=1.45.0",
+    "streamlit-oauth>=0.1.11",
 ]

@@ -55,11 +55,12 @@ class MCPClient:
 When you use the Rapidata tool, you may consider the prompting guides that are provided here: \n" + PROMPTING_GUIDE + "\n\
 If asked about something like 'i wonder what peoples favorite X is', feel free to first gather the free text options and then combine it with a classification to find out which option is the most popular."
     
-    async def connect_to_server(self, server_script_path: str):
+    async def connect_to_server(self, server_script_path: str, env: dict[str, str] | None = None):
         """Connect to an MCP server and add its tools to the available tools
 
         Args:
             server_script_path: Path to the server script (.py or .js)
+            env: Optional environment variables to pass to the server
         """
         if not server_script_path:
             logger.error("Server script path is empty")
@@ -75,7 +76,7 @@ If asked about something like 'i wonder what peoples favorite X is', feel free t
         server_params = StdioServerParameters(
             command=command,
             args=[server_script_path],
-            env=None
+            env=env
         )
 
         logger.debug(f"Connecting to server: {server_script_path} with command: {command}")

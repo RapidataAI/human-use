@@ -3,6 +3,10 @@ from rapidata import RapidataClient, LanguageFilter, LabelingSelection, Retrieva
 import os
 from typing import Any, Optional
 import logging
+from dotenv import load_dotenv
+import json
+load_dotenv()
+
 
 # Configure logging
 logging.basicConfig(
@@ -14,6 +18,16 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+RAPIDATA_CLIENT_SECRET = os.getenv("RAPIDATA_CLIENT_SECRET")
+RAPIDATA_CLIENT_ID = os.getenv("RAPIDATA_CLIENT_ID")
+TOKENS = os.getenv("RAPIDATA_TOKENS")
+
+rapidata_client = RapidataClient(
+    client_id=RAPIDATA_CLIENT_ID, 
+    client_secret=RAPIDATA_CLIENT_SECRET, 
+    token=json.loads(TOKENS)
+)
 
 # Initialize FastMCP server
 logger.info("Initializing FastMCP server with name 'rapidata'")
@@ -43,9 +57,8 @@ async def get_free_text_responses(
     """
     logger.info(f"get_free_text_responses called with name: {name}, instruction: {instruction}")
     logger.debug(f"Total responses: {total_responses}, dir_path: {dir_path}")
-    
+    global rapidata_client
     try:
-        client = RapidataClient()
 
         if dir_path is not None:
             files = os.listdir(dir_path)
@@ -60,7 +73,7 @@ async def get_free_text_responses(
             filters.append(LanguageFilter(language_codes=[language]))
 
         logger.info("Creating free text order")
-        order = client.order.create_free_text_order(
+        order = rapidata_client.order.create_free_text_order(
             name=name,
             instruction=instruction,
             datapoints=datapoints,
@@ -113,9 +126,8 @@ async def get_human_image_classification(
     """
     logger.info(f"get_human_image_classification called with name: {name}, instruction: {instruction}")
     logger.debug(f"Answer options: {answer_options}, total_responses: {total_responses}, dir_path: {dir_path}")
-    
+    global rapidata_client
     try:
-        client = RapidataClient()
 
         if dir_path is not None:
             files = os.listdir(dir_path)
@@ -130,7 +142,7 @@ async def get_human_image_classification(
             filters.append(LanguageFilter(language_codes=[language]))
 
         logger.info("Creating classification order")
-        order = client.order.create_classification_order(
+        order = rapidata_client.order.create_classification_order(
             name=name,
             instruction=instruction,
             answer_options=answer_options,
@@ -182,15 +194,15 @@ async def get_human_image_ranking(
     logger.info(f"get_human_image_ranking called with name: {name}, instruction: {instruction}, dir_path: {dir_path}")
     logger.debug(f"Total comparison budget: {total_comparison_budget}")
     
+    global rapidata_client
     try:
-        client = RapidataClient()
         
         files = os.listdir(dir_path)
         paths = [os.path.join(dir_path, f) for f in files]
         logger.debug(f"Using images from directory: {dir_path}")
 
         logger.info("Creating ranking order")
-        order = client.order.create_ranking_order(
+        order = rapidata_client.order.create_ranking_order(
             name=name,
             instruction=instruction,
             datapoints=paths,
@@ -241,11 +253,10 @@ async def get_human_text_comparison(
     logger.info(f"get_human_text_comparison called with name: {name}, instruction: {instruction}")
     logger.debug(f"Total responses: {total_responses}, language: {language}")
     
+    global rapidata_client
     try:
-        client = RapidataClient()
-
         logger.info("Creating text comparison order")
-        order = client.order.create_compare_order(
+        order = rapidata_client.order.create_compare_order(
             name=name,
             instruction=instruction,
             datapoints=text_pairs,
