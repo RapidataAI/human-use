@@ -286,7 +286,7 @@ def apply_custom_css():
             
             /* bg */          
             --color-background: oklch(16.34% 0.0091 264.28);
-            --color-background-secondary: oklch(20.27% 0.0118 254.1);
+            --color-background-secondary: oklch(0.25 0.0118 254.1);
             
             /* text */
             --color-text-primary: oklch(0.967 0.003 264.542);
@@ -678,7 +678,7 @@ def apply_custom_css():
         
         .description-box {{
             padding: .5rem;
-            background-color: #ff000050;
+            background-color: #0077ff50;
             border-radius: .25rem;
         }}
     </style>
@@ -849,6 +849,12 @@ def authorize_button():
 
 
 if __name__ == "__main__":
+    st.set_page_config(
+        page_title="Rapidata - Human Use",
+        page_icon=im,
+        initial_sidebar_state="collapsed",
+    )
+
     loop = get_event_loop()
     
     # First initialize session state and apply CSS
