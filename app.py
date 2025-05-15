@@ -71,16 +71,23 @@ def set_api_key():
 async def initialize_client(model: str = "claude-3-7-sonnet-20250219") -> MCPClient:
     """Initialize the MCPClient if it hasn't been initialized yet"""
     client = MCPClient(model=model)
-    rapidata_mcp_path = os.environ.get("PATH_TO_RAPIDATA_MCP")
-    if rapidata_mcp_path:
-        await client.connect_to_server(rapidata_mcp_path)
+    # rapidata_mcp_path = os.environ.get("PATH_TO_RAPIDATA_MCP")
+    # if rapidata_mcp_path:
+    #     await client.connect_to_server(rapidata_mcp_path)
+    # else:
+    #     logger.warning("Rapidata MCP path not found")
+
+    # image_generation_mcp_path = os.environ.get("PATH_TO_IMAGE_GENERATION_MCP")
+    # if image_generation_mcp_path:
+    #     await client.connect_to_server(image_generation_mcp_path)
+    # else:
+    #     logger.warning("Image generation MCP path not found")
+
+    browser_use_mcp_path = os.environ.get("PATH_TO_BROWSER_USE_MCP")
+    if browser_use_mcp_path:
+        await client.connect_to_server(browser_use_mcp_path)
     else:
-        logger.warning("Rapidata MCP path not found")
-    image_generation_mcp_path = os.environ.get("PATH_TO_IMAGE_GENERATION_MCP")
-    if image_generation_mcp_path:
-        await client.connect_to_server(image_generation_mcp_path)
-    else:
-        logger.warning("Image generation MCP path not found")
+        logger.warning("Browser use MCP path not found")
     
     return client
 
