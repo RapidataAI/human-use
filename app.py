@@ -676,12 +676,6 @@ im = Image.open("./assets/favicon.ico")
 
 
 async def main():
-    st.set_page_config(
-        page_title="Rapidata - Human Use",
-        page_icon=im,
-        initial_sidebar_state="collapsed",
-    )
-    
     initialize_session_state()
     
     # Apply custom styling
@@ -824,5 +818,11 @@ async def main():
 
 
 if __name__ == "__main__":
+    st.set_page_config(
+        page_title="Rapidata - Human Use",
+        page_icon=im,
+        initial_sidebar_state="collapsed",
+    )
+    
     loop = get_event_loop()
     loop.run_until_complete(main())
