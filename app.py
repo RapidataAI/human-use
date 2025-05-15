@@ -351,7 +351,6 @@ def apply_custom_css():
         .stChatMessage > img {{
             padding: .25rem !important;
             background-color: rgba(255,255,255,.25) !important;
-            border-radius: 50% !important;
             box-sizing: content-box !important;
         }}
         
