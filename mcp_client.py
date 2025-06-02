@@ -45,15 +45,15 @@ PROMPTING_GUIDE = read_human_prompting()
 
 class MCPClient:
     def __init__(self, model: str = MODEL):
-        # Initialize collections for multiple sessions
-        self.sessions: dict[str, dict] = {}  # dict to store sessions by server path
+        self.sessions: dict[str, dict] = {}
         self.exit_stack = AsyncExitStack()
-        self.anthropic = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))  # Initialize Anthropic client with API key
-        self.available_tools = []  # Maintain a list of all available tools
-        self.model = model  # Store the model name
-        self.system_prompt = "You're a helpful assistant that has different tools at their disposal. You have the ability to as REAL HUMANS using the rapidata API.\n\
+        self.anthropic = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+        self.available_tools = []
+        self.model = model
+        self.system_prompt = "You're a helpful assistant that has different tools at their disposal. You have the ability to ask REAL HUMANS using the rapidata API.\n\
 When you use the Rapidata tool, you may consider the prompting guides that are provided here: \n" + PROMPTING_GUIDE + "\n\
-If asked about something like 'i wonder what peoples favorite X is', feel free to first gather the free text options and then combine it with a classification to find out which option is the most popular."
+If asked about something like 'i wonder what peoples favorite X is', feel free to first gather the free text options and then combine it with a classification to find out which option is the most popular.\
+If you can, use the classification tool instead of the free text tool as it is faster and cheaper."
     
     async def connect_to_server(self, server_script_path: str, env: dict[str, str] | None = None):
         """Connect to an MCP server and add its tools to the available tools
