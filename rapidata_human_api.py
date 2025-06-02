@@ -99,6 +99,8 @@ async def get_human_image_classification(
 
     Will ask actual humans to classify the images in the directory.
 
+    Can be used as a survey tool with predefined answer options.
+
     Args:
         name (str): The name of the order (will not effect the results but used to identify the order).
         instruction (str): The question asked to the people. They will try to select the answer based on the question. (example "What is shown in the image?")
