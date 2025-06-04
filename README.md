@@ -18,7 +18,7 @@ We now offer a hosted version of Human Use at [chat.rapidata.ai](https://chat.ra
 
 Coming up with a cool car design
 
-[![Car design](https://github.com/user-attachments/assets/f21efe04-46e7-4b34-8f5b-8dafddf051e9)](https://youtu.be/H7LFSXwiO1o)
+https://github.com/user-attachments/assets/0d4c5c8f-4177-4fcf-8028-800dab16b009
 
 Finding the best slogan
 
