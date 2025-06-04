@@ -16,6 +16,10 @@ We now offer a hosted version of Human Use at [chat.rapidata.ai](https://chat.ra
 
 ## Human Use in Action
 
+Coming up with a cool car design
+
+[![Car design](https://github.com/user-attachments/assets/f21efe04-46e7-4b34-8f5b-8dafddf051e9)](https://youtu.be/H7LFSXwiO1o)
+
 Finding the best slogan
 
 [![AI Agent Slogan](https://github.com/user-attachments/assets/28148703-7fb2-4876-9528-bcfd8ce9b50a)](https://youtu.be/n36ovFDvH-Y)
