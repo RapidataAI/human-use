@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/rapidataai-human-use-badge.png)](https://mseep.ai/app/rapidataai-human-use)
+
 <a href="https://www.rapidata.ai">
 <img src="https://github.com/user-attachments/assets/d8ff0f04-c636-4e04-b2de-399b33a2805d" alt="Rapidata Human Use Logo">
 </a>
