@@ -1,5 +1,6 @@
 from mcp.server.fastmcp import FastMCP
-from rapidata import RapidataClient, LanguageFilter, LabelingSelection, RetrievalMode 
+from collections import Counter
+from rapidata import RapidataClient, LanguageFilter
 import os
 from typing import Any, Optional
 import logging
@@ -19,6 +20,35 @@ logger = logging.getLogger(__name__)
 logger.info("Initializing FastMCP server with name 'rapidata'")
 mcp = FastMCP("rapidata")
 
+DEFAULT_IMAGE = "https://assets.rapidata.ai/152c11b5-c428-4489-ad83-1651ebfe0efd.jpeg"
+
+
+def _audience(client: RapidataClient, language: str | None):
+    audience = client.audience.get_audience_by_id("global")
+    if language:
+        return audience.filter([LanguageFilter(language_codes=[language])])
+    return audience
+
+
+def _datapoint_metadata(datapoints: list[str]) -> list[dict[str, str]]:
+    return [{"datapoint": os.path.basename(d)} for d in datapoints]
+
+
+def _datapoint_key(result: dict[str, Any], index: int, datapoints: list[str]) -> str:
+    metadata = result.get("privateMetadata") or {}
+    if "datapoint" in metadata:
+        return metadata["datapoint"]
+    return os.path.basename(datapoints[index]) if index < len(datapoints) else str(index)
+
+
+def _run(audience, job_definition):
+    job = audience.assign_job(job_definition)
+    try:
+        job.view()
+    except Exception as e:
+        logger.error(f"Error viewing job: {str(e)}")
+    return job.get_results()
+
 @mcp.tool()
 async def get_free_text_responses(
     name: str, 
@@ -32,14 +62,14 @@ async def get_free_text_responses(
     Will ask actual humans to provide some short free text responses to the question.
 
     Args:
-        name (str): The name of the order (will not effect the results but used to identify the order).
+        name (str): The name of the job (will not effect the results but used to identify the job).
         instruction (str): The question asked to the people. They will try to answer is. (example "Who is your favorite actor?")
         total_responses (int): The total number of responses that will be collected. More responses will take SIGNIFICANTLY longer. defaults to 5.
         dir_path (Optional[str]): path to the directory containing images. If not provided, a default image will be used.
             If provided, the images in the directory will be used as datapoints. (EACH datapoint will get the amount of responses specified in total_responses)
         language (str | None): The language the respondents speak. Has to be given as 2 LOWERCASE letters. If not provided, the question will be asked to all respondents.
     Returns:
-        dict[str, Any]: dictionary containing the final elo rankings of the images
+        dict[str, Any]: dictionary mapping each datapoint to its free text responses and their counts
     """
     logger.info(f"get_free_text_responses called with name: {name}, instruction: {instruction}")
     logger.debug(f"Total responses: {total_responses}, dir_path: {dir_path}")
@@ -52,32 +82,25 @@ async def get_free_text_responses(
             datapoints = [os.path.join(dir_path, f) for f in files]
             logger.debug(f"Using images from directory: {dir_path}")
         else:
-            datapoints = ["https://assets.rapidata.ai/152c11b5-c428-4489-ad83-1651ebfe0efd.jpeg"]
+            datapoints = [DEFAULT_IMAGE]
             logger.debug("No directory path provided, using default image")
 
-        filters = []
-        if language:
-            filters.append(LanguageFilter(language_codes=[language]))
-
-        logger.info("Creating free text order")
-        order = client.order.create_free_text_order(
+        logger.info("Creating free text job")
+        job_definition = client.job.create_free_text_job_definition(
             name=name,
             instruction=instruction,
             datapoints=datapoints,
             responses_per_datapoint=total_responses,
-            selections=[LabelingSelection(amount=1, retrieval_mode=RetrievalMode.Random)],
-            filters=filters,
-        ).run()
-        
-        logger.info("Free text order created and run successfully")
+            private_metadata=_datapoint_metadata(datapoints),
+        )
+        results = _run(_audience(client, language), job_definition)
+        logger.info("Free text job completed")
 
-        try:
-            order.view()
-        except Exception as e:
-            logger.error(f"Error viewing order: {str(e)}. Make sure to update your rapidata version.")
-        
-        results = order.get_results()
-        processed_results = {result["originalFileName"]: result["aggregatedResults"] for result in results["results"]}
+        processed_results = {
+            _datapoint_key(result, i, datapoints): result.get("aggregatedResults")
+            or dict(Counter(d.get("votedFor") for d in result.get("detailedResults", [])))
+            for i, result in enumerate(results["results"])
+        }
         logger.debug(f"Free text results processed: {processed_results}")
         logger.info("Successfully retrieved free text results")
         
@@ -102,7 +125,7 @@ async def get_human_image_classification(
     Can be used as a survey tool with predefined answer options.
 
     Args:
-        name (str): The name of the order (will not effect the results but used to identify the order).
+        name (str): The name of the job (will not effect the results but used to identify the job).
         instruction (str): The question asked to the people. They will try to select the answer based on the question. (example "What is shown in the image?")
         answer_options (list[str]): The options that will be shown to the people. They will have to choose one of them. (maximum 6 options).
             (example ["cat", "dog", "car", "tree"])
@@ -124,33 +147,25 @@ async def get_human_image_classification(
             full_paths = [os.path.join(dir_path, f) for f in files]
             logger.debug(f"Using images from directory: {dir_path}")
         else:
-            full_paths = ["https://assets.rapidata.ai/152c11b5-c428-4489-ad83-1651ebfe0efd.jpeg"]
+            full_paths = [DEFAULT_IMAGE]
             logger.debug("No directory path provided, using default image")
 
-        filters = []
-        if language:
-            filters.append(LanguageFilter(language_codes=[language]))
-
-        logger.info("Creating classification order")
-        order = client.order.create_classification_order(
+        logger.info("Creating classification job")
+        job_definition = client.job.create_classification_job_definition(
             name=name,
             instruction=instruction,
             answer_options=answer_options,
             datapoints=full_paths,
             responses_per_datapoint=total_responses,
-            filters=filters,
-            selections=[LabelingSelection(amount=3, retrieval_mode=RetrievalMode.Random)],
-        ).run()
+            private_metadata=_datapoint_metadata(full_paths),
+        )
+        results = _run(_audience(client, language), job_definition)
+        logger.info("Classification job completed")
 
-        logger.info("Classification order created and run successfully")
-
-        try:
-            order.view()
-        except Exception as e:
-            logger.error(f"Error viewing order: {str(e)}. Make sure to update your rapidata version.")
-
-        results = order.get_results()["results"]
-        processed_results = {result["originalFileName"]: result["summedUserScoresRatios"] for result in results}
+        processed_results = {
+            _datapoint_key(result, i, full_paths): result["summedUserScoresRatios"]
+            for i, result in enumerate(results["results"])
+        }
         logger.debug(f"Classification results processed")
         logger.info("Successfully retrieved classification results")
         
@@ -172,7 +187,7 @@ async def get_human_image_ranking(
 
     Args:
         dir_path (str): path to the directory containing images
-        name (str): The name of the order (will not effect the results but used to identify the order).
+        name (str): The name of the job (will not effect the results but used to identify the job).
         instruction (str): The question asked to the people. Based on this they will rank the images. (example "Which image looks better?")
             There will be pair wise matchups rated by humans. The results will effect the elo score of the images. The question will be shown with 2 images.
         total_comparison_budget (int): The total number of comparisons to be made. This is the total number of pairwise matchups that will be shown to humans. 
@@ -191,25 +206,22 @@ async def get_human_image_ranking(
         paths = [os.path.join(dir_path, f) for f in files]
         logger.debug(f"Using images from directory: {dir_path}")
 
-        logger.info("Creating ranking order")
-        order = client.order.create_ranking_order(
+        logger.info("Creating ranking job")
+        job_definition = client.job.create_ranking_job_definition(
             name=name,
             instruction=instruction,
-            datapoints=paths,
+            datapoints=[paths],
+            comparison_budget_per_ranking=total_comparison_budget,
             responses_per_comparison=1,
-            total_comparison_budget=total_comparison_budget,
-            selections=[LabelingSelection(amount=3, retrieval_mode=RetrievalMode.Random)],
-        ).run()
-        
-        logger.info("Ranking order created and run successfully")
-        
-        try:
-            order.view()
-        except Exception as e:
-            logger.error(f"Error viewing order: {str(e)}. Make sure to update your rapidata version.")
-        
-        results = order.get_results()
-        processed_results = results["summary"]
+        )
+        results = _run(_audience(client, None), job_definition)
+        logger.info("Ranking job completed")
+
+        processed_results = results.get("summary") or {
+            key: value
+            for key, value in results["results"][0].items()
+            if key != "detailedResults"
+        }
         logger.debug(f"Ranking results processed")
         logger.info("Successfully retrieved ranking results")
         
@@ -232,7 +244,7 @@ async def get_human_text_comparison(
 
     Args:
         text_pairs (list[list[str]]): list of pairs of texts to be compared. Each pair should be a list of exactly two strings.
-        name (str): The name of the order (will not effect the results but used to identify the order).
+        name (str): The name of the job (will not effect the results but used to identify the job).
         instruction (str): The question asked to the people. They will try to choose the better text based on this. (example "Which text is do you prefer?")
         total_responses (int): The total number of responses that will be collected. More responses will take longer but give a clearer results. defaults to 15.
         language (str): The language of the texts. Has to be given as 2 LOWERCASE letters defaults to "en".
@@ -246,25 +258,17 @@ async def get_human_text_comparison(
     try:
         client = RapidataClient()
 
-        logger.info("Creating text comparison order")
-        order = client.order.create_compare_order(
+        logger.info("Creating text comparison job")
+        job_definition = client.job.create_compare_job_definition(
             name=name,
             instruction=instruction,
             datapoints=text_pairs,
             responses_per_datapoint=total_responses,
             data_type="text",
-            filters=[LanguageFilter(language_codes=[language])],
-            selections=[LabelingSelection(amount=2, retrieval_mode=RetrievalMode.Random)],
-        ).run()
+        )
+        results = _run(_audience(client, language), job_definition)
+        logger.info("Text comparison job completed")
 
-        logger.info("Text comparison order created and run successfully")
-
-        try:
-            order.view()
-        except Exception as e:
-            logger.error(f"Error viewing order: {str(e)}. Make sure to update your rapidata version.")
-        
-        results = order.get_results()
         processed_results = [result["aggregatedResults"] for result in results["results"]]
         logger.debug(f"Text comparison results processed")
         logger.info("Successfully retrieved text comparison results")
